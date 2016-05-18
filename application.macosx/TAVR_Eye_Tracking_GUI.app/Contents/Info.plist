@@ -5,17 +5,17 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>English</string>
     <key>CFBundleExecutable</key>
-    <string>EyeKeyboard4</string>
+    <string>TAVR_Eye_Tracking_GUI</string>
     <key>CFBundleIconFile</key>
     <string>sketch.icns</string>
     <key>CFBundleIdentifier</key>
-    <string>EyeKeyboard4</string>
+    <string>TAVR_Eye_Tracking_GUI</string>
     <key>CFBundleDisplayName</key>
-    <string>EyeKeyboard4</string>
+    <string>TAVR_Eye_Tracking_GUI</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>EyeKeyboard4</string>
+    <string>TAVR_Eye_Tracking_GUI</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
 
@@ -36,7 +36,7 @@
     <string>jdk1.8.0_92.jdk</string>
 
     <key>JVMMainClassName</key>
-    <string>EyeKeyboard4</string>
+    <string>TAVR_Eye_Tracking_GUI</string>
 
     <key>LSMinimumSystemVersion</key>
     <string>10.7.3</string>
@@ -69,7 +69,7 @@
       <string>-Dapple.laf.useScreenMenuBar=true</string>
       <string>-Dcom.apple.macos.use-file-dialog-packages=true</string>
       <string>-Dcom.apple.macos.useScreenMenuBar=true</string>
-      <string>-Dcom.apple.mrj.application.apple.menu.about.name=EyeKeyboard4</string>
+      <string>-Dcom.apple.mrj.application.apple.menu.about.name=TAVR_Eye_Tracking_GUI</string>
       <string>-Dcom.apple.smallTabs=true</string>
     </array>
     <key>JVMArguments</key>
