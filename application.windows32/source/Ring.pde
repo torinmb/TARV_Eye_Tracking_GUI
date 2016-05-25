@@ -4,6 +4,7 @@ class Ring {
     RShape ring;
     RShape safeZone;
     RFont text;
+    color ringColor;
     String selectedElement;
     int selectedRingIndex;
     boolean firstTime;
@@ -15,6 +16,8 @@ class Ring {
         this.selectedElement = "";
         this.data = data;
         this.ring = new RShape();
+        this.ringColor = color(255, 255, 255, 255);
+        //this.ringColor = color(0,0,0,80);
         this.safeZone = RG.getEllipse(0, 0, 40);
         this.safeZone = RG.centerIn(safeZone, g, 330);
         for (int i = 1; i < this.data.length + 1; i++) {
@@ -33,20 +36,26 @@ class Ring {
     }
 
     void draw(PGraphics g) {
+        smooth(8);
         ring.draw(g);
         safeZone.draw(g);
         int ringWeight = 10;
         RPoint p = new RPoint(mouseX-width/2, mouseY-height/2);
-        if (safeZone.contains(p)){
+        if (safeZone.contains(p)) {
             firstTime = true;
             firstTimeOverElement = true;
             stroke(0,100,255,250);
             ringWeight = 80;
         }
-        stroke(0,0,0,80);
+        stroke(this.ringColor);
         safeZone.draw(g);
-        stroke(0, 0, 0, ringWeight);
+        strokeWeight(15);
+        stroke(255);
+        point(-1 , -1);
+        strokeWeight(3);
+        //stroke(0, 0, 0, ringWeight);
         ring.draw(g);
+
         for(int i=0; i < ring.countChildren(); i++) {
             if(ring.children[i].contains(p)) {
                if (firstTime) {
@@ -57,12 +66,18 @@ class Ring {
                }
                if (selectedRingIndex == i) {
                   if (firstTimeOverElement) {
+                      //stroke();
+                      strokeWeight(4);
                       stroke(0,100,255,250);
+                      
+                  } else {
+                    strokeWeight(3);                      
                   }
                }
 
                ring.children[i].draw();
-               stroke(0, 0, 0, ringWeight);
+               stroke(this.ringColor);
+               //stroke(0, 0, 0, ringWeight);
                if (firstTime) {
                    firstTime = false;
                    selectedElement = this.data[i];
@@ -74,8 +89,8 @@ class Ring {
     
     void drawText(int index) {
         int i = index;
-        fill(50);
-        textSize(25);
+        fill(255);
+        textSize(30);
 
         int x1 = getX(i + 1, this.data.length, SCALE);
         int y1 = getY(i + 1, this.data.length, SCALE);
@@ -88,9 +103,6 @@ class Ring {
         xavg -= textCenter;
         
         text(this.data[i], xavg - textCenter, yavg);
-        strokeWeight(10);
-        point(xavg - textCenter, yavg);
-        strokeWeight(3);
         noFill();
     }
 
