@@ -6,6 +6,9 @@ class Ring {
     RFont text;
     color ringColor;
     String selectedElement;
+    float seX;
+    float seY;
+    
     int selectedRingIndex;
     boolean firstTime;
     boolean firstTimeOverElement;
@@ -49,7 +52,7 @@ class Ring {
         }
         stroke(this.ringColor);
         safeZone.draw(g);
-        strokeWeight(15);
+        strokeWeight(10);
         stroke(255);
         point(-1 , -1);
         strokeWeight(3);
@@ -81,17 +84,48 @@ class Ring {
                if (firstTime) {
                    firstTime = false;
                    selectedElement = this.data[i];
+                   int x1 = getX(i + 1, this.data.length, SCALE);
+                   int y1 = getY(i + 1, this.data.length, SCALE);
+                   int x0 = getX(i, this.data.length, SCALE);
+                   int y0 = getY(i, this.data.length, SCALE);
+                   float xavg = (x1 + x0) / OPTION_RADIUS2;
+                   float yavg = (y1 + y0) / OPTION_RADIUS2;
+                   
+                   seX = xavg;
+                   seY = yavg;
+                   //strokeWeight(200);
+                   //point(xavg, yavg);
+                   //strokeWeight(3);
                }
             }
-            drawText(i);
+            if (drawIcons) {
+                switch(this.data[i]) {
+                    case "On":
+                        drawIcons(i, "light-bulb-on.png");
+                        break;
+                    case "Off":
+                        drawIcons(i, "light-bulb-off.png");
+                        break;            
+                    case "Back":
+                        drawIcons(i, "back.png");
+                        break;                                    
+                default:
+                    drawIcons(i, "");
+                    break;
+                        
+                }
+            } else {
+                drawIcons(i, "");
+            }
         }
     }
     
-    void drawText(int index) {
+    
+    void drawIcons(int index, String icon) {
         int i = index;
         fill(255);
         textSize(30);
-
+        
         int x1 = getX(i + 1, this.data.length, SCALE);
         int y1 = getY(i + 1, this.data.length, SCALE);
         int x0 = getX(i, this.data.length, SCALE);
@@ -99,10 +133,21 @@ class Ring {
 
         float xavg = (x1 + x0) / OPTION_RADIUS;
         float yavg = (y1 + y0) / OPTION_RADIUS;
-        float textCenter = textWidth(this.data[i]) / 4.0;
-        xavg -= textCenter;
+        float center = textWidth(this.data[i]) / 4.0;
+        PImage img;
+        if (icon != "") {
+            img = loadImage(icon);
+            center = img.width /2;
+            xavg -= center;
+            image(img, xavg, yavg - img.height/2);
+        } else {
+            xavg -= center;
+            text(this.data[i], xavg - center, yavg);
+        }
         
-        text(this.data[i], xavg - textCenter, yavg);
+        
+        
+        
         noFill();
     }
 

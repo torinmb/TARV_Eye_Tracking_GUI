@@ -12,7 +12,8 @@ String[] stereoData = {"Off", "Back", "Volume", "On"};
 String[] volumeData = {"100%", "Mute", "Back", "25%", "50%", "75%"};
 String[] lightsData= {"Off", "Back", "On"};
 String[] keysData= {"asdf", "asdf", "asdf"};
-
+float pX = 0;
+float pY = 0;
 //String[] lightsData= {"1 On", "2 On", "3 On", "Back", "1 Off", "2 Off", "3 Off"};
 Ring lights;
 Ring home;
@@ -37,9 +38,11 @@ int r1on = 13;
 int r1off = 12;
 int r2on = 11;
 int r2off = 10;
+boolean drawIcons;
 
 int SCALE;
 float OPTION_RADIUS = 25.0;
+float OPTION_RADIUS2 = 25.0;
 
 void setup() {
     size(displayWidth, displayHeight, P3D);
@@ -57,7 +60,7 @@ void setup() {
     //socket = context.socket(zmq.SUB)
     //socket.connect("tcp://127.0.0.1:"+port)
     //socket.setsockopt(zmq.SUBSCRIBE, 'gaze_positions')
-    //useArduino = true;
+    useArduino = true;
    
     //Arduino Setup
     if (useArduino) {
@@ -83,10 +86,11 @@ void draw() {
     blendMode(BLEND);
     strokeWeight(3);
     
-    //if (mousePressed) {
-    //   println(OPTION_RADIUS);
-    //   OPTION_RADIUS = map(mouseX, 0, width, 1, 40);
-    //}
+    if (mousePressed) {
+        drawIcons = !drawIcons;
+       println(OPTION_RADIUS);
+       OPTION_RADIUS2 = map(mouseX, 0, width, 1, 40);
+    }
 
     if (showInterface) {
         
@@ -96,7 +100,9 @@ void draw() {
             showInterface = false;
         }
     }
+    
     scale(interfaceT);
+
     //scale(.2);
     switch(home.selectedElement) {
         case "TV":
@@ -106,9 +112,13 @@ void draw() {
             home.selectedElement = "Home";
             break;            
         case "Lights":
+            pX = home.seX;
+            pY = home.seY;
+            //translate(home.seX, home.seY);
             lights.draw(g); 
             break;
         case "Stereo":
+            //translate(home.seX, home.seY);
             stereo.draw(g);
             break;
         case "Keyboard":
@@ -159,13 +169,16 @@ void draw() {
             home.selectedElement = "Stereo";            
             break;        
         default:
+            translate(pX + stereo.seX, pY + stereo.seY);
             break;
     }
     
     switch(stereo.selectedElement) {
         case "Volume":
-            volume.draw(g);
             home.selectedElement = "";
+            
+            volume.draw(g);
+            
             break;
         case "On":
             if (useArduino) {
